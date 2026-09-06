@@ -1,0 +1,115 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+group = 'com.me.flappybird'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    version = '21'
+    modules = ['javafx.controls']
+}
+
+application {
+    mainClass = 'com.me.flappybird.Main'
+}
+
+run {
+    jvmArgs += "--enable-native-access=javafx.graphics"
+}
+
+dependencies {
+    implementation("org.jetbrains:annotations:16.0.2")
+}
+
+
+jar {
+    archiveFileName = 'FlappyBird.jar'
+
+    manifest {
+        attributes 'Main-Class': 'com.me.flappybird.Main'
+    }
+}
+
+tasks.register("createRuntimeImage", Exec) {
+    dependsOn jar
+
+    doFirst {
+        def runtimeDir = file("$buildDir/runtime")
+        delete runtimeDir
+
+        def modulePath = configurations.runtimeClasspath.asPath
+
+        commandLine(
+                "jlink",
+                "--module-path", modulePath,
+                "--add-modules", "java.base,java.desktop,java.logging,javafx.controls,javafx.graphics,javafx.base",
+                "--output", runtimeDir.absolutePath,
+                "--strip-debug",
+                "--no-header-files",
+                "--no-man-pages"
+        )
+    }
+}
+
+tasks.register("packageExe", Exec) {
+    dependsOn createRuntimeImage
+
+    doFirst {
+        def tempDir = file("$buildDir/app-temp")
+        delete tempDir
+        tempDir.mkdirs()
+
+        commandLine(
+                "jpackage",
+                "--type", "app-image",
+                "--name", "FlappyBird",
+                "--runtime-image", "$buildDir/runtime",
+                "--input", "$buildDir/libs",
+                "--main-jar", "FlappyBird.jar",
+                "--main-class", "com.me.flappybird.Main",
+                "--dest", tempDir.absolutePath
+        )
+    }
+}
+
+tasks.register("getExe") {
+    dependsOn packageExe
+
+    doLast {
+        def appDir = file("$buildDir/app")
+        def packagedDir = file("$buildDir/app-temp/FlappyBird")
+
+        delete appDir
+        appDir.mkdirs()
+
+        copy {
+            from packagedDir
+            into appDir
+        }
+
+        delete "$buildDir/app-temp"
+    }
+}
+
+tasks.register("countLines") {
+    doLast {
+        def files = fileTree("src").matching {
+            include "**/*.java"
+        }.files.collect { file ->
+            [file: file, lines: file.readLines().size()]
+        }.sort { a, b -> b.lines <=> a.lines }
+
+        files.each {
+            println "${it.file}: ${it.lines} lines"
+        }
+
+        println ""
+        println "Total: ${files.sum { it.lines }} lines"
+    }
+}
