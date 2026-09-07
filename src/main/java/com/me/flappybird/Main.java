@@ -11,7 +11,7 @@ public class Main extends Application {
         Pane root = new Pane();
         Scene scene = new Scene(root);
 
-        //root.setScaleY(-1); // Flips the Y coordonate to make (0, 0) mean bottom left instead of top left
+        root.setScaleY(-1); // Flips the Y coordinate to make (0, 0) mean bottom left instead of top left
 
         stage.setTitle("FlappyBird");
         stage.setScene(scene);
