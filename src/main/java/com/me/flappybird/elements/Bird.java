@@ -12,13 +12,13 @@ public class Bird extends Element {
     public Bird() {
         super(getInitHitbox());
 
-        this.state = UP;
+        this.state = DOWN;
 
-        this.addGraphicalElement(this.getBird());
+        this.addGraphicalElement(this.getBirdView());
     }
 
     private static Hitbox getInitHitbox() {
-        String resource = Bird.class.getResource("/sprites/bird_mid.png").toString();
+        String resource = Bird.class.getResource("/sprites/bird/bird_mid.png").toString();
         Image img = new Image(resource);
 
         return new Hitbox(
@@ -29,20 +29,20 @@ public class Bird extends Element {
         );
     }
 
-    private ImageView getBird() {
+    private ImageView getBirdView() {
         return this.state.getImage();
     }
 
     public void setState(State state) {
-        this.removeGraphicalElement(this.getBird());
+        this.removeGraphicalElement(this.getBirdView());
         this.state = state;
-        this.addGraphicalElement(this.getBird());
+        this.addGraphicalElement(this.getBirdView());
     }
 
     public enum State {
-        UP(State.class.getResource("/sprites/bird_up.png").toString()),
-        MID(State.class.getResource("/sprites/bird_mid.png").toString()),
-        DOWN(State.class.getResource("/sprites/bird_down.png").toString());
+        UP(State.class.getResource("/sprites/bird/bird_up.png").toString()),
+        MID(State.class.getResource("/sprites/bird/bird_mid.png").toString()),
+        DOWN(State.class.getResource("/sprites/bird/bird_down.png").toString());
 
         private final ImageView img;
 
