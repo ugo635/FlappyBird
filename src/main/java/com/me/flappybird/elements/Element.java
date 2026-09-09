@@ -9,29 +9,44 @@ public abstract class Element extends StackPane {
 
     public Element(Hitbox hitbox) {
         this.hitbox = hitbox;
+        this.setScaleY(-1); // Flips the element to be flipped on the y axis
+        this.updateGraphicalPosition();
     }
 
-    public void addGraphicalElement(Node element) {
+    public final void addGraphicalElement(Node element) {
         this.getChildren().add(element);
     }
 
-    public void removeGraphicalElement(Node element) {
+    public final void removeGraphicalElement(Node element) {
         this.getChildren().remove(element);
     }
 
-    public double getX() {
+    public final double getX() {
         return this.hitbox.getX();
     }
 
-    public double getY() {
+    public final double getY() {
         return this.hitbox.getY();
     }
 
-    public double getHitboxWidth() {
+    public final double getHitboxWidth() {
         return this.hitbox.getWidth();
     }
 
-    public double getHitboxHeight() {
+    public final double getHitboxHeight() {
         return this.hitbox.getHeight();
+    }
+
+    public final void setPos(double x, double y) {
+        this.hitbox.setX(x);
+        this.hitbox.setY(y);
+
+        this.setLayoutX(x);
+        this.setLayoutY(y);
+    }
+
+    public final void updateGraphicalPosition() {
+        this.setLayoutX(this.hitbox.getX());
+        this.setLayoutY(this.hitbox.getY());
     }
 }

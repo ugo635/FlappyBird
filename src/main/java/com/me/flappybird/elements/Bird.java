@@ -22,8 +22,8 @@ public class Bird extends Element {
         Image img = new Image(resource);
 
         return new Hitbox(
-                0,
-                0,
+                100,
+                350,
                 img.getWidth(),
                 img.getHeight()
         );
