@@ -5,12 +5,15 @@ import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 
 public abstract class Element extends StackPane {
-    private final Hitbox hitbox;
+    protected final Hitbox hitbox;
 
     public Element(Hitbox hitbox) {
         this.hitbox = hitbox;
         this.setScaleY(-1); // Flips the element to be flipped on the y axis
-        this.updateGraphicalPosition();
+    }
+
+    public Element() {
+        this(new Hitbox(0, 0, 0, 0));
     }
 
     public final void addGraphicalElement(Node element) {

@@ -1,6 +1,5 @@
 package com.me.flappybird.elements;
 
-import com.me.flappybird.util.Hitbox;
 import com.me.flappybird.util.Vector;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,10 +11,15 @@ public class Bird extends Element {
     private Vector velocity;
 
     public Bird() {
-        super(getInitHitbox());
+        super();
 
-        this.state = DOWN;
+        this.state = MID;
         this.velocity = new Vector(5, 0);
+
+        Image img = new Image(this.state.getImageURL());
+
+        this.hitbox.setPosition(100, 350);
+        this.hitbox.setSize(img.getWidth(), img.getHeight());
 
         this.addGraphicalElement(this.getBirdView());
     }
@@ -77,30 +81,19 @@ public class Bird extends Element {
         MID(State.class.getResource("/sprites/bird/bird_mid.png").toString()),
         DOWN(State.class.getResource("/sprites/bird/bird_down.png").toString());
 
-        private final ImageView img;
+        private final String url;
 
         State(String url) {
-            this.img = new ImageView(url);
+            this.url = url;
         }
 
-        public ImageView getImage() {
-            return this.img;
+        public String getImageURL() {
+            return this.url;
         }
     }
 
     private ImageView getBirdView() {
-        return this.state.getImage();
+        return new ImageView(this.state.getImageURL());
     }
 
-    private static Hitbox getInitHitbox() {
-        String resource = Bird.class.getResource("/sprites/bird/bird_mid.png").toString();
-        Image img = new Image(resource);
-
-        return new Hitbox(
-                100,
-                350,
-                img.getWidth(),
-                img.getHeight()
-        );
-    }
 }

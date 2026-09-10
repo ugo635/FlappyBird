@@ -3,8 +3,8 @@ package com.me.flappybird.util;
 public class Hitbox {
     private double x;
     private double y;
-    private final double width;
-    private final double height;
+    private double width;
+    private double height;
 
     public Hitbox(double x, double y, double width, double height) {
         this.x = x;
@@ -52,5 +52,10 @@ public class Hitbox {
 
     public void setX(double x) {
         this.x = x;
+    }
+
+    public void setSize(double width, double height) {
+        this.width = width;
+        this.height = height;
     }
 }
