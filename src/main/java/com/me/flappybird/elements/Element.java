@@ -37,6 +37,8 @@ public abstract class Element extends StackPane {
         return this.hitbox.getHeight();
     }
 
+    public void update() {}
+
     public final void setPos(double x, double y) {
         this.hitbox.setX(x);
         this.hitbox.setY(y);

@@ -21,7 +21,7 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
 
-        stage.requestFocus();
+        root.requestFocus();
     }
 
     public static void main(String[] args) {
