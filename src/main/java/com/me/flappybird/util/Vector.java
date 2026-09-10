@@ -68,4 +68,9 @@ public class Vector {
     public void setY(double y) {
         this.y = y;
     }
+
+    public void set(Vector vector) {
+        this.x = vector.x;
+        this.y = vector.y;
+    }
 }

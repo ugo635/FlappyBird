@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 
 import static com.me.flappybird.elements.Bird.State.*;
 
-public class Bird extends Element {
+public class Bird extends Element implements Moveable {
     private State state;
     private Vector velocity;
 
@@ -31,9 +31,9 @@ public class Bird extends Element {
                 this.getY() + this.getVelocity().getY()
         );
 
-        if (this.getVelocity().getY() > 5) {
+        if (this.getVelocity().getY() > 7.5) {
             this.setState(DOWN);
-        } else if (this.getVelocity().getY() < -1) {
+        } else if (this.getVelocity().getY() < -2.5) {
             this.setState(UP);
         } else {
             this.setState(MID);
@@ -48,15 +48,18 @@ public class Bird extends Element {
         }
     }
 
-    private Vector getVelocity() {
-        return this.velocity;
+    @Override
+    public Vector getVelocity() {
+        return velocity;
     }
 
-    private void setVelocity(Vector velocity) {
-        this.velocity = velocity;
+    @Override
+    public void setVelocity(Vector velocity) {
+        this.velocity.set(velocity);
     }
 
-    private void addVelocity(Vector velocity) {
+    @Override
+    public void addVelocity(Vector velocity) {
         this.velocity.add(velocity);
     }
 
