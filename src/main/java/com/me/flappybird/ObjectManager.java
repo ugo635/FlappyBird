@@ -40,7 +40,8 @@ public class ObjectManager {
             if (!this.hasStarted) return;
 
             this.elements.forEach(Element::update);
-            if (bird.getY() < Game.FLOOR_HEIGHT || bird.getY() > Game.ROOF_HEIGHT) {
+            if (bird.getY() < Game.FLOOR_HEIGHT || bird.getY() > Game.ROOF_HEIGHT
+                || this.pillars.stream().anyMatch(pillar -> pillar.intersects(bird))) {
                 this.gameOver();
             }
         }));

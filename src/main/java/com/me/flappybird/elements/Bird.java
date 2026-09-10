@@ -36,6 +36,12 @@ public class Bird extends Element {
         }
 
         this.velocity.addY(-2.5); // Gravity
+
+        if (this.velocity.getY() < -30) {
+            this.velocity.setY(-30); // Limit falling speed
+        } else if (this.velocity.getY() > 15) {
+            this.velocity.setY(15); // Limit rising speed
+        }
     }
 
     private Vector getVelocity() {

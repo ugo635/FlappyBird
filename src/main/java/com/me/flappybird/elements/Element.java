@@ -37,6 +37,14 @@ public abstract class Element extends StackPane {
         return this.hitbox.getHeight();
     }
 
+    public final Hitbox getHitbox() {
+        return this.hitbox;
+    }
+
+    public final boolean intersects(Element other) {
+        return this.hitbox.intersects(other.getHitbox());
+    }
+
     public void update() {}
 
     public final void setPos(double x, double y) {
